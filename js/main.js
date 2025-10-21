@@ -416,34 +416,78 @@ var fixHeroButtons = function() {
 		})
 	};
 
-	var contactForm = function() {
-		$('#contactForm').on('submit', function(e) {
-			e.preventDefault();
-			console.log('Formulaire soumis');
-			const form = $(this);
-			const submitBtn = form.find('button[type="submit"]');
-			const originalText = submitBtn.text();
-			submitBtn.prop('disabled', true);
-			submitBtn.text('Sending...');
-			$.ajax({
-				url: form.attr('action'),
-				method: 'POST',
-				data: form.serialize(),
-				dataType: 'json'
-			}).done(function(data) {
-				submitBtn.text('Message Sent!');
-				submitBtn.removeClass('btn-primary').addClass('btn-success');
-				form[0].reset();
-			}).fail(function(error) {
-				submitBtn.text('Error - Try Again');
-				submitBtn.removeClass('btn-primary').addClass('btn-danger');
-			}).always(function() {
-				submitBtn.prop('disabled', false);
-				submitBtn.text(originalText);
-				submitBtn.removeClass('btn-success').addClass('btn-primary');
-			});
-		});
-	};
+	// ========================================
+// FORMULAIRE DE CONTACT - Fix liens email
+// ========================================
+
+// Gestion du formulaire de contact
+$('#contactForm').on('submit', function(e) {
+	e.preventDefault();
+	
+	const form = $(this);
+	const submitBtn = form.find('button[type="submit"]');
+	const originalText = submitBtn.text();
+	
+	// Désactiver le bouton et changer le texte
+	submitBtn.prop('disabled', true);
+	submitBtn.text('Sending...');
+	
+	// Envoyer les données via AJAX
+	$.ajax({
+		url: form.attr('action'),
+		method: 'POST',
+		data: form.serialize(),
+		dataType: 'json'
+	}).done(function(data) {
+		// Succès
+		submitBtn.text('Message Sent!');
+		submitBtn.removeClass('btn-primary').addClass('btn-success');
+		form[0].reset();
+		
+		// Réinitialiser après 3 secondes
+		setTimeout(function() {
+			submitBtn.prop('disabled', false);
+			submitBtn.text(originalText);
+			submitBtn.removeClass('btn-success').addClass('btn-primary');
+		}, 3000);
+		
+	}).fail(function(error) {
+		// Erreur
+		submitBtn.text('Error - Try Again');
+		submitBtn.removeClass('btn-primary').addClass('btn-danger');
+		
+		// Réinitialiser après 3 secondes
+		setTimeout(function() {
+			submitBtn.prop('disabled', false);
+			submitBtn.text(originalText);
+			submitBtn.removeClass('btn-danger').addClass('btn-primary');
+		}, 3000);
+	});
+});
+
+// ========================================
+// FIX LIENS EMAIL - Desktop et Mobile
+// ========================================
+
+// S'assurer que les liens mailto fonctionnent partout
+$(document).on('click', 'a[href^="mailto:"]', function(e) {
+	// Laisser le navigateur gérer le lien mailto
+	// Ne pas empêcher le comportement par défaut
+	e.stopPropagation(); // Empêcher la propagation aux parents
+	return true; // Laisser le lien fonctionner
+});
+
+// Idem pour les liens tel:
+$(document).on('click', 'a[href^="tel:"]', function(e) {
+	e.stopPropagation();
+	return true;
+});
+
+// Idem pour les liens externes (GitHub, LinkedIn, etc.)
+$(document).on('click', 'a[target="_blank"]', function(e) {
+	e.stopPropagation();
+	return true;
+});
 
 		// Document on load.
 	$(function(){

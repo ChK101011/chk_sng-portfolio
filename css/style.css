@@ -1667,6 +1667,72 @@ body.offcanvas {
   body.offcanvas #colorlib-hero {
       pointer-events: none !important;
   }
+
+  /* Réduire l'espace du logo et de l'image */
+  #colorlib-aside .author-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+  }
+  
+  #colorlib-aside #colorlib-logo {
+    font-size: 18px;
+    margin-bottom: 0.3em;
+  }
+  
+  #colorlib-aside .position {
+    font-size: 11px;
+    margin-bottom: 1em;
+  }
+  
+  /* Navigation compacte */
+  #colorlib-aside #colorlib-main-menu ul {
+    margin: 0 0 1em 0;
+  }
+  
+  #colorlib-aside #colorlib-main-menu ul li {
+    margin: 0 0 5px 0;
+    font-size: 11px;
+  }
+  
+  #colorlib-aside #colorlib-main-menu ul li a {
+    padding: 8px 0;
+  }
+  
+  /* Boutons mode sombre et langue plus compacts */
+  .dark-mode-switch,
+  .language-switch {
+    padding: 10px 15px;
+    margin-top: 10px;
+  }
+  
+  .btn-dark-mode,
+  .btn-language {
+    padding: 8px 15px;
+    font-size: 12px;
+    gap: 8px;
+  }
+  
+  .mode-icon,
+  .language-icon {
+    font-size: 16px;
+  }
+  
+  .mode-text,
+  .language-text {
+    font-size: 12px;
+  }
+  
+  /* Footer social icons plus compact */
+  #colorlib-aside .colorlib-footer {
+    padding: 0 15px;
+    margin-top: 15px;
+  }
+  
+  #colorlib-aside .colorlib-footer ul li a {
+    padding: 3px;
+    font-size: 18px;
+  }
 }
 
 
@@ -2796,4 +2862,38 @@ body.dark-mode .pagination li.active a {
   body.offcanvas #colorlib-main {
     pointer-events: none !important;
   }
+}
+
+/* ========================================
+   LIENS EMAIL ET TÉLÉPHONE
+======================================== */
+
+a[href^="mailto:"],
+a[href^="tel:"] {
+	cursor: pointer !important;
+	pointer-events: auto !important;
+	position: relative;
+	z-index: 10;
+}
+
+a[href^="mailto:"]:hover,
+a[href^="tel:"]:hover {
+	color: #2c98f0 !important;
+	text-decoration: underline;
+}
+
+/* Mode sombre */
+body.dark-mode a[href^="mailto:"]:hover,
+body.dark-mode a[href^="tel:"]:hover {
+	color: #44a4f2 !important;
+}
+
+/* Sur mobile : forcer tous les liens à être cliquables */
+@media (max-width: 768px) {
+	a[href^="mailto:"],
+	a[href^="tel:"],
+	a[target="_blank"] {
+		-webkit-tap-highlight-color: rgba(44, 152, 240, 0.3);
+		touch-action: manipulation;
+	}
 }
